@@ -57,7 +57,7 @@ export default function ImageUpload({ label, hint, value, onChange, aspect }: Pr
 
   return (
     <div>
-      <label className="block text-sm font-bold mb-2">{label}</label>
+      <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
       {hint && <p className="text-zinc-500 text-xs mb-2">{hint}</p>}
 
       {value ? (
@@ -66,12 +66,12 @@ export default function ImageUpload({ label, hint, value, onChange, aspect }: Pr
           <img
             src={value}
             alt=""
-            className={`w-full ${aspect ?? 'aspect-square'} object-cover rounded-xl border border-zinc-700`}
+            className={`w-full ${aspect ?? 'aspect-square'} object-cover rounded-xl border border-white/[0.08]`}
           />
           <button
             type="button"
             onClick={() => onChange('')}
-            className="absolute top-2 right-2 bg-black/70 text-white text-xs font-bold px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute top-2 right-2 bg-black/70 text-white text-xs font-medium px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
           >
             Remove
           </button>
@@ -82,10 +82,10 @@ export default function ImageUpload({ label, hint, value, onChange, aspect }: Pr
           onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
           onDragLeave={() => setDragOver(false)}
           onDrop={handleDrop}
-          className={`flex flex-col items-center justify-center gap-1 border-2 border-dashed rounded-xl py-8 px-4 cursor-pointer transition-colors text-center ${
+          className={`flex flex-col items-center justify-center gap-1 border border-dashed rounded-xl py-8 px-4 cursor-pointer transition-colors text-center ${
             dragOver
-              ? 'border-yellow-400 bg-yellow-400/5'
-              : 'border-zinc-700 hover:border-zinc-500'
+              ? 'border-yellow-400/60 bg-yellow-400/5'
+              : 'border-white/[0.12] hover:border-white/[0.25]'
           }`}
         >
           <input
@@ -103,8 +103,8 @@ export default function ImageUpload({ label, hint, value, onChange, aspect }: Pr
           ) : (
             <>
               <span className="text-2xl mb-1">📤</span>
-              <p className="text-sm font-bold">Drop image here or click to upload</p>
-              <p className="text-xs text-zinc-500">PNG, JPG, WebP up to 5MB</p>
+              <p className="text-sm font-medium text-zinc-300">Drop image here or click to upload</p>
+              <p className="text-xs text-zinc-600">PNG, JPG, WebP up to 5MB</p>
             </>
           )}
         </div>

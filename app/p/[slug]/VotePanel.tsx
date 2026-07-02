@@ -90,16 +90,16 @@ export default function VotePanel({
   return (
     <div className="space-y-6">
       {/* Live bar */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
+      <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-zinc-400 text-sm font-medium">
             {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
           </span>
           {timeLeft && (
-            <span className="text-zinc-500 text-xs">{timeLeft}</span>
+            <span className="text-zinc-600 text-xs">{timeLeft}</span>
           )}
         </div>
-        <div className="flex rounded-full overflow-hidden h-4 bg-zinc-800">
+        <div className="flex rounded-full overflow-hidden h-3 bg-white/[0.06]">
           <div
             className="bg-green-500 transition-all duration-500"
             style={{ width: `${summary.buildPct}%` }}
@@ -109,7 +109,7 @@ export default function VotePanel({
             style={{ width: `${summary.killPct}%` }}
           />
         </div>
-        <div className="flex justify-between text-sm font-bold">
+        <div className="flex justify-between text-sm font-semibold">
           <span className="text-green-400">🚀 {summary.buildPct}% BUILD</span>
           <span className="text-red-400">💀 {summary.killPct}% KILL</span>
         </div>
@@ -118,10 +118,10 @@ export default function VotePanel({
       {/* Vote buttons */}
       {voted ? (
         <div className="space-y-4">
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 text-center">
-            <p className="text-zinc-400 mb-1 text-sm">You voted</p>
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 text-center">
+            <p className="text-zinc-500 mb-1 text-sm">You voted</p>
             <p
-              className={`text-3xl font-black ${
+              className={`text-2xl font-semibold ${
                 voted === 'build' ? 'text-green-400' : 'text-red-400'
               }`}
             >
@@ -136,18 +136,18 @@ export default function VotePanel({
           />
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => castVote('build')}
             disabled={!!loading}
-            className="btn-build py-6 bg-green-500 hover:bg-green-400 text-white font-black text-2xl rounded-2xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="btn-build py-5 bg-green-500/90 hover:bg-green-500 text-white font-semibold text-xl rounded-2xl transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
           >
             {loading === 'build' ? '...' : '🚀 BUILD'}
           </button>
           <button
             onClick={() => castVote('kill')}
             disabled={!!loading}
-            className="btn-kill py-6 bg-red-500 hover:bg-red-400 text-white font-black text-2xl rounded-2xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="btn-kill py-5 bg-red-500/90 hover:bg-red-500 text-white font-semibold text-xl rounded-2xl transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
           >
             {loading === 'kill' ? '...' : '💀 KILL'}
           </button>

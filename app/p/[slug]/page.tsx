@@ -101,7 +101,7 @@ export default async function ProjectPage({
                   <img
                     src={project.thumbnail_url}
                     alt={`${project.name} thumbnail`}
-                    className="w-full aspect-[1.91/1] object-cover rounded-2xl border border-zinc-800"
+                    className="w-full aspect-[1.91/1] object-cover rounded-2xl border border-white/[0.08]"
                   />
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                   {project.logo_url && (
@@ -118,12 +118,12 @@ export default async function ProjectPage({
                 <img
                   src={project.logo_url}
                   alt={`${project.name} logo`}
-                  className="w-16 h-16 rounded-2xl object-cover border border-zinc-800"
+                  className="w-16 h-16 rounded-2xl object-cover border border-white/[0.08]"
                 />
               ) : null}
 
               <div className={project.thumbnail_url && project.logo_url ? 'pt-10' : 'pt-4'}>
-                <h1 className="text-4xl font-black tracking-tight">{project.name}</h1>
+                <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">{project.name}</h1>
                 {project.link && (
                   <a
                     href={project.link}
@@ -138,14 +138,14 @@ export default async function ProjectPage({
                 {(project.categories?.length > 0 || project.pricing_tier) && (
                   <div className="flex flex-wrap gap-2 mt-3">
                     {project.pricing_tier && (
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 capitalize">
+                      <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 capitalize">
                         {project.pricing_tier}
                       </span>
                     )}
                     {project.categories?.map((cat: string) => (
                       <span
                         key={cat}
-                        className="text-xs font-bold px-2.5 py-1 rounded-full bg-zinc-800/80 text-zinc-300 border border-zinc-700 hover:border-zinc-500 transition-colors"
+                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/[0.04] text-zinc-400 border border-white/[0.08] hover:border-white/[0.2] transition-colors"
                       >
                         {cat}
                       </span>
@@ -161,12 +161,12 @@ export default async function ProjectPage({
                         href={`https://x.com/${project.creator_twitter}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-zinc-200 font-semibold hover:text-yellow-400 transition-colors"
+                        className="text-zinc-300 font-medium hover:text-yellow-400 transition-colors"
                       >
                         {project.creator_name || `@${project.creator_twitter}`}
                       </a>
                     ) : (
-                      <span className="text-zinc-200 font-semibold">{project.creator_name}</span>
+                      <span className="text-zinc-300 font-medium">{project.creator_name}</span>
                     )}
                   </p>
                 )}
@@ -227,7 +227,7 @@ export default async function ProjectPage({
                       key={i}
                       src={url}
                       alt={`${project.name} screenshot ${i + 1}`}
-                      className="w-full rounded-xl border border-zinc-800 object-cover"
+                      className="w-full rounded-xl border border-white/[0.08] object-cover"
                     />
                   ))}
               </div>
@@ -238,17 +238,17 @@ export default async function ProjectPage({
           <div className="lg:sticky lg:top-8 space-y-6">
             {/* Builder's context */}
             <div
-              className={`relative overflow-hidden bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4 border-l-4 ${
-                verdictColor === 'green' ? 'border-l-green-500' : 'border-l-red-500'
+              className={`relative overflow-hidden bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 space-y-4 border-l-2 ${
+                verdictColor === 'green' ? 'border-l-green-500/70' : 'border-l-red-500/70'
               }`}
             >
-              <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">
+              <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap text-sm">
                 {project.description}
               </p>
-              <div className="pt-4 border-t border-zinc-800 flex items-center gap-2">
+              <div className="pt-4 border-t border-white/[0.06] flex items-center gap-2">
                 <span className="text-zinc-500 text-sm">The builder thinks:</span>
                 <span
-                  className={`font-black text-lg ${
+                  className={`font-semibold text-lg ${
                     verdictColor === 'green' ? 'text-green-400' : 'text-red-400'
                   }`}
                 >
@@ -298,7 +298,7 @@ function StatCard({
       <p className="text-zinc-500 text-[11px] uppercase tracking-wide mb-0.5">
         {label}
       </p>
-      <p className="text-xl font-black">{value}</p>
+      <p className="text-xl font-semibold text-zinc-100">{value}</p>
     </div>
   )
 }

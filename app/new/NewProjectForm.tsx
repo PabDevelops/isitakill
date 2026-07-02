@@ -62,18 +62,18 @@ export default function NewProjectForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-bold mb-2">Project Name *</label>
+        <label className="block text-sm font-medium text-zinc-300 mb-2">Project Name *</label>
         <input
           required
           value={form.name}
           onChange={(e) => set('name', e.target.value)}
           placeholder="e.g. MarkdownMail"
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Project URL <span className="text-zinc-500 font-normal">(optional)</span>
         </label>
         <input
@@ -81,7 +81,7 @@ export default function NewProjectForm() {
           value={form.link}
           onChange={(e) => set('link', e.target.value)}
           placeholder="https://yourproject.com"
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
         />
       </div>
 
@@ -103,7 +103,7 @@ export default function NewProjectForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Context & Traction *
         </label>
         <p className="text-zinc-500 text-xs mb-2">
@@ -115,12 +115,12 @@ export default function NewProjectForm() {
           onChange={(e) => set('description', e.target.value)}
           rows={5}
           placeholder="e.g. 'It's a markdown-to-email tool. 3 paying customers at $7/mo after 8 months. Growth has stalled and I'm losing motivation. Built it for fun but not sure if there's a real market.'"
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors resize-none"
+          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors resize-none"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Traction Numbers <span className="text-zinc-500 font-normal">(optional)</span>
         </label>
         <p className="text-zinc-500 text-xs mb-2">
@@ -138,7 +138,7 @@ export default function NewProjectForm() {
               value={form.monthly_revenue}
               onChange={(e) => set('monthly_revenue', e.target.value)}
               placeholder="0"
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
             />
           </div>
           <div>
@@ -151,7 +151,7 @@ export default function NewProjectForm() {
               value={form.users_count}
               onChange={(e) => set('users_count', e.target.value)}
               placeholder="0"
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
             />
           </div>
           <div>
@@ -164,7 +164,7 @@ export default function NewProjectForm() {
               value={form.monthly_visits}
               onChange={(e) => set('monthly_visits', e.target.value)}
               placeholder="0"
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
             />
           </div>
           <div>
@@ -178,14 +178,14 @@ export default function NewProjectForm() {
               value={form.capital_invested}
               onChange={(e) => set('capital_invested', e.target.value)}
               placeholder="0"
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+              className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
             />
           </div>
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Screenshots <span className="text-zinc-500 font-normal">(optional)</span>
         </label>
         <p className="text-zinc-500 text-xs mb-2">
@@ -196,12 +196,12 @@ export default function NewProjectForm() {
           onChange={(e) => set('screenshot_urls', e.target.value)}
           rows={3}
           placeholder={'https://i.imgur.com/abc123.png\nhttps://i.imgur.com/def456.png'}
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors resize-none"
+          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors resize-none"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Categories <span className="text-zinc-500 font-normal">(optional, max {MAX_CATEGORIES})</span>
         </label>
         <div className="flex flex-wrap gap-2">
@@ -214,12 +214,12 @@ export default function NewProjectForm() {
                 type="button"
                 disabled={disabled}
                 onClick={() => toggleCategory(cat)}
-                className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-colors ${
+                className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
                   selected
                     ? 'bg-yellow-400 border-yellow-400 text-black'
                     : disabled
-                    ? 'border-zinc-800 text-zinc-600 cursor-not-allowed'
-                    : 'border-zinc-700 text-zinc-400 hover:border-zinc-500'
+                    ? 'border-white/[0.06] text-zinc-700 cursor-not-allowed'
+                    : 'border-white/[0.1] text-zinc-400 hover:border-white/[0.25]'
                 }`}
               >
                 {cat}
@@ -230,13 +230,13 @@ export default function NewProjectForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Pricing Tier <span className="text-zinc-500 font-normal">(optional)</span>
         </label>
         <select
           value={form.pricing_tier}
           onChange={(e) => set('pricing_tier', e.target.value)}
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
         >
           <option value="">Not specified</option>
           <option value="free">Free — always free</option>
@@ -247,21 +247,21 @@ export default function NewProjectForm() {
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-bold mb-2">
+          <label className="block text-sm font-medium text-zinc-300 mb-2">
             Creator Name <span className="text-zinc-500 font-normal">(optional)</span>
           </label>
           <input
             value={form.creator_name}
             onChange={(e) => set('creator_name', e.target.value)}
             placeholder="Your name"
-            className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
           />
         </div>
         <div>
-          <label className="block text-sm font-bold mb-2">
+          <label className="block text-sm font-medium text-zinc-300 mb-2">
             X / Twitter <span className="text-zinc-500 font-normal">(optional)</span>
           </label>
-          <div className="flex items-center bg-zinc-900 border border-zinc-700 rounded-xl px-4 focus-within:border-yellow-400 transition-colors">
+          <div className="flex items-center bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 focus-within:border-yellow-400 transition-colors">
             <span className="text-zinc-500">@</span>
             <input
               value={form.creator_twitter}
@@ -274,7 +274,7 @@ export default function NewProjectForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
           Your Honest Verdict *
         </label>
         <p className="text-zinc-500 text-xs mb-3">
@@ -287,12 +287,12 @@ export default function NewProjectForm() {
               key={v}
               type="button"
               onClick={() => set('builder_verdict', v)}
-              className={`py-4 rounded-xl font-black text-lg border-2 transition-all ${
+              className={`py-4 rounded-xl font-semibold text-lg border transition-all ${
                 form.builder_verdict === v
                   ? v === 'build'
-                    ? 'bg-green-500 border-green-400 text-white scale-105'
-                    : 'bg-red-500 border-red-400 text-white scale-105'
-                  : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
+                    ? 'bg-green-500/15 border-green-500/50 text-green-400'
+                    : 'bg-red-500/15 border-red-500/50 text-red-400'
+                  : 'bg-white/[0.03] border-white/[0.08] text-zinc-500 hover:border-white/[0.2]'
               }`}
             >
               {v === 'build' ? '🚀 BUILD' : '💀 KILL'}
@@ -302,11 +302,11 @@ export default function NewProjectForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-bold mb-2">Voting Window</label>
+        <label className="block text-sm font-medium text-zinc-300 mb-2">Voting Window</label>
         <select
           value={form.voting_days}
           onChange={(e) => set('voting_days', e.target.value)}
-          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
         >
           <option value="3">3 days</option>
           <option value="7">7 days (recommended)</option>
@@ -324,7 +324,7 @@ export default function NewProjectForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-yellow-400 text-black font-black text-lg py-4 rounded-xl hover:bg-yellow-300 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:scale-100"
+        className="w-full bg-yellow-400 text-black font-semibold text-lg py-4 rounded-full hover:bg-yellow-300 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50 disabled:scale-100"
       >
         {loading ? 'Submitting...' : 'Submit & Get the Verdict →'}
       </button>

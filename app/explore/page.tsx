@@ -18,29 +18,29 @@ export default async function ExplorePage() {
     <div className="min-h-screen bg-[#0a0a0a]">
       <Nav />
       <div className="max-w-5xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-10">
           <div>
-            <h1 className="text-4xl font-black">Explore Projects</h1>
-            <p className="text-zinc-400 mt-1">
+            <h1 className="text-3xl font-semibold text-zinc-100">Explore Projects</h1>
+            <p className="text-zinc-500 mt-1 text-sm">
               Vote BUILD or KILL on projects from the community.
             </p>
           </div>
           <Link
             href="/new"
-            className="text-sm bg-yellow-400 text-black font-black px-4 py-2 rounded-lg hover:bg-yellow-300 transition-colors whitespace-nowrap"
+            className="text-sm bg-yellow-400 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-300 transition-colors whitespace-nowrap"
           >
             + Submit Yours
           </Link>
         </div>
 
         {!projects?.length ? (
-          <div className="text-center py-20 text-zinc-500">
+          <div className="text-center py-20 text-zinc-600">
             <p className="text-5xl mb-4">🔍</p>
-            <p className="text-xl font-bold mb-2">No projects yet</p>
-            <p className="mb-6">Be the first to submit one.</p>
+            <p className="text-lg font-semibold mb-2 text-zinc-300">No projects yet</p>
+            <p className="mb-6 text-zinc-500">Be the first to submit one.</p>
             <Link
               href="/new"
-              className="inline-block bg-yellow-400 text-black font-black px-8 py-3 rounded-xl hover:bg-yellow-300 transition-colors"
+              className="inline-block bg-yellow-400 text-black font-semibold px-8 py-3 rounded-full hover:bg-yellow-300 transition-colors"
             >
               Submit Your Project →
             </Link>
@@ -60,7 +60,7 @@ export default async function ExplorePage() {
                 <Link
                   key={project.id}
                   href={`/p/${project.slug}`}
-                  className="bg-zinc-900 border border-zinc-800 hover:border-zinc-600 rounded-2xl overflow-hidden transition-colors"
+                  className="bg-white/[0.02] border border-white/[0.07] hover:border-white/[0.16] rounded-2xl overflow-hidden transition-colors"
                 >
                   {project.thumbnail_url && (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -81,30 +81,30 @@ export default async function ExplorePage() {
                           className="w-6 h-6 rounded-md object-cover shrink-0"
                         />
                       )}
-                      <h2 className="font-black text-lg truncate">
+                      <h2 className="font-semibold text-lg text-zinc-100 truncate">
                         {project.name}
                       </h2>
                     </div>
                     {summary.isFlipped && votingClosed && (
-                      <span className="text-xs bg-yellow-400 text-black font-black px-2 py-0.5 rounded shrink-0 ml-2">
-                        🔄 FLIPPED
+                      <span className="text-xs bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-medium px-2 py-0.5 rounded-full shrink-0 ml-2">
+                        🔄 Flipped
                       </span>
                     )}
                   </div>
-                  <p className="text-zinc-400 text-sm line-clamp-2">
+                  <p className="text-zinc-500 text-sm line-clamp-2">
                     {project.description}
                   </p>
                   {(project.categories?.length > 0 || project.pricing_tier) && (
                     <div className="flex flex-wrap gap-1.5">
                       {project.pricing_tier && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 capitalize">
+                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 capitalize">
                           {project.pricing_tier}
                         </span>
                       )}
                       {project.categories?.slice(0, 3).map((cat: string) => (
                         <span
                           key={cat}
-                          className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700"
+                          className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-500 border border-white/[0.08]"
                         >
                           {cat}
                         </span>
@@ -112,7 +112,7 @@ export default async function ExplorePage() {
                     </div>
                   )}
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-zinc-500">
+                    <span className="text-zinc-600">
                       Builder:{' '}
                       <span
                         className={
@@ -125,16 +125,16 @@ export default async function ExplorePage() {
                       </span>
                     </span>
                     <span
-                      className={`font-bold px-2 py-0.5 rounded ${
+                      className={`font-medium px-2 py-0.5 rounded-full ${
                         votingClosed
-                          ? 'bg-zinc-800 text-zinc-400'
-                          : 'bg-green-500/20 text-green-400'
+                          ? 'bg-white/[0.04] text-zinc-500'
+                          : 'bg-green-500/10 text-green-400'
                       }`}
                     >
                       {votingClosed ? 'Closed' : 'Voting open'}
                     </span>
                   </div>
-                  <div className="flex rounded-full overflow-hidden h-2 bg-zinc-800">
+                  <div className="flex rounded-full overflow-hidden h-1.5 bg-white/[0.05]">
                     <div
                       className="bg-green-500"
                       style={{ width: `${summary.buildPct}%` }}
@@ -144,7 +144,7 @@ export default async function ExplorePage() {
                       style={{ width: `${summary.killPct}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-xs text-zinc-500">
+                  <div className="flex justify-between text-xs text-zinc-600">
                     <span>{summary.buildPct}% BUILD</span>
                     <span>{summary.total} votes</span>
                     <span>{summary.killPct}% KILL</span>

@@ -24,15 +24,15 @@ export default function Nav() {
   }
 
   return (
-    <nav className="border-b border-zinc-800 px-4 py-4">
+    <nav className="border-b border-white/[0.06] px-4 py-4 backdrop-blur-sm">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <Link href="/" className="text-xl font-black tracking-tight">
+        <Link href="/" className="text-lg font-semibold tracking-tight text-zinc-100">
           IsitA<span className="text-yellow-400">Kill</span>?
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <Link
             href="/explore"
-            className="text-sm text-zinc-400 hover:text-white transition-colors"
+            className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
           >
             Explore
           </Link>
@@ -40,19 +40,19 @@ export default function Nav() {
             <>
               <Link
                 href="/dashboard"
-                className="text-sm text-zinc-400 hover:text-white transition-colors"
+                className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
               >
                 Dashboard
               </Link>
               <Link
                 href="/new"
-                className="text-sm bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-300 transition-colors"
+                className="text-sm font-medium text-black bg-yellow-400/90 px-3.5 py-1.5 rounded-full hover:bg-yellow-400 transition-colors"
               >
                 + New Project
               </Link>
               <button
                 onClick={signOut}
-                className="text-sm text-zinc-500 hover:text-white transition-colors"
+                className="text-sm text-zinc-600 hover:text-zinc-300 transition-colors"
               >
                 Sign out
               </button>
@@ -61,13 +61,13 @@ export default function Nav() {
             <>
               <Link
                 href="/login"
-                className="text-sm text-zinc-400 hover:text-white transition-colors"
+                className="text-sm text-zinc-500 hover:text-zinc-200 transition-colors"
               >
                 Sign in
               </Link>
               <Link
                 href="/new"
-                className="text-sm bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-300 transition-colors"
+                className="text-sm font-medium text-black bg-yellow-400/90 px-3.5 py-1.5 rounded-full hover:bg-yellow-400 transition-colors"
               >
                 Submit Project →
               </Link>

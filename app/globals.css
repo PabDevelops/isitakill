@@ -30,3 +30,42 @@ body {
 }
 
 .flip-reveal { animation: flip-in 0.6s ease-out forwards; }
+
+/* --- Decorative background system --- */
+
+@keyframes orb-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(1.08); opacity: 0.75; }
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  background: radial-gradient(circle, rgba(250,204,21,0.55) 0%, rgba(250,204,21,0.12) 55%, transparent 75%);
+  animation: orb-pulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 30%, black 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 55% at 50% 30%, black 0%, transparent 75%);
+  pointer-events: none;
+}
+
+@keyframes wave-sweep {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.wave-line {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(250,204,21,0.6), transparent, rgba(250,204,21,0.3), transparent);
+  background-size: 200% 100%;
+  animation: wave-sweep 8s linear infinite;
+}

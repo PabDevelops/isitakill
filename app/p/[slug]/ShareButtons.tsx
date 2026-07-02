@@ -43,13 +43,13 @@ export default function ShareButtons({
 
   return (
     <div className="space-y-3">
-      <p className="text-zinc-500 text-sm font-bold uppercase tracking-widest">
+      <p className="text-zinc-600 text-xs font-medium uppercase tracking-widest">
         Share
       </p>
       <div className="flex gap-3">
         <button
           onClick={copyLink}
-          className="flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-xl transition-colors text-sm"
+          className="flex-1 py-3 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-200 font-medium rounded-xl transition-colors text-sm"
         >
           {copied ? '✓ Copied!' : '🔗 Copy Link'}
         </button>
@@ -57,7 +57,7 @@ export default function ShareButtons({
           href={tweetUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3 bg-black hover:bg-zinc-900 border border-zinc-700 text-white font-bold rounded-xl transition-colors text-sm text-center"
+          className="flex-1 py-3 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-200 font-medium rounded-xl transition-colors text-sm text-center"
         >
           𝕏 Share on X
         </a>
@@ -65,7 +65,7 @@ export default function ShareButtons({
       <a
         href={imageUrl}
         download={`${slug}.png`}
-        className="block w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-xl transition-colors text-sm text-center"
+        className="block w-full py-3 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-200 font-medium rounded-xl transition-colors text-sm text-center"
       >
         🖼️ Download Image
       </a>
