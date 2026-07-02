@@ -25,7 +25,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className="border-b border-white/[0.06] px-4 py-4 backdrop-blur-sm relative">
+    <nav className="border-b border-white/[0.06] px-4 py-4 relative z-50">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <Link href="/" className="text-lg font-semibold tracking-tight text-zinc-100">
           IsitA<span className="text-yellow-400">Kill</span>?
@@ -97,7 +97,6 @@ export default function Nav() {
         <div className="sm:hidden absolute left-0 right-0 top-full bg-[#0a0a0a] border-b border-white/[0.08] px-4 py-3 flex flex-col gap-1 z-50">
           <Link
             href="/explore"
-            onClick={() => setMenuOpen(false)}
             className="py-2.5 text-sm text-zinc-400 hover:text-zinc-200 transition-colors"
           >
             Explore
@@ -106,7 +105,6 @@ export default function Nav() {
             <>
               <Link
                 href="/dashboard"
-                onClick={() => setMenuOpen(false)}
                 className="py-2.5 text-sm text-zinc-400 hover:text-zinc-200 transition-colors"
               >
                 Dashboard
@@ -121,7 +119,6 @@ export default function Nav() {
           ) : (
             <Link
               href="/login"
-              onClick={() => setMenuOpen(false)}
               className="py-2.5 text-sm text-zinc-400 hover:text-zinc-200 transition-colors"
             >
               Sign in
