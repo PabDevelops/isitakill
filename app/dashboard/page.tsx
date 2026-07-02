@@ -34,17 +34,10 @@ export default async function DashboardPage() {
             <p className="text-zinc-600 text-sm mt-1">{user.email}</p>
           </div>
           <div className="flex items-center gap-3">
-            {isPaid ? (
+            {isPaid && (
               <span className="text-xs bg-yellow-400 text-black font-semibold px-3 py-1 rounded-full">
                 PRO
               </span>
-            ) : (
-              <a
-                href="/api/stripe/checkout"
-                className="text-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-200 font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap"
-              >
-                Upgrade to Pro →
-              </a>
             )}
             <Link
               href="/new"
