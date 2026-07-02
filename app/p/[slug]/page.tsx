@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { computeVoteSummary } from '@/lib/votes'
-import { Verdict } from '@/lib/types'
+import { Verdict, BOOST_ENABLED } from '@/lib/types'
 import VotePanel from './VotePanel'
 import ResultPanel from './ResultPanel'
 import BoostPanel, { BoostBadge } from './BoostPanel'
@@ -93,7 +93,9 @@ export default async function ProjectPage({
 
   const verdictColor = project.builder_verdict === 'build' ? 'green' : 'red'
   const isBoosted =
-    project.boosted_until && new Date(project.boosted_until) > new Date()
+    BOOST_ENABLED &&
+    project.boosted_until &&
+    new Date(project.boosted_until) > new Date()
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -290,7 +292,7 @@ export default async function ProjectPage({
               />
             )}
 
-            {isOwner && !votingClosed && (
+            {BOOST_ENABLED && isOwner && !votingClosed && (
               <BoostPanel
                 projectId={project.id}
                 boostedUntil={project.boosted_until}

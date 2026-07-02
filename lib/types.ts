@@ -18,6 +18,9 @@ export const BOOST_OPTIONS: BoostOption[] = [
 export const TRIAL_BOOST_HOURS = 24
 export const DEFAULT_LISTING_DAYS = 14
 
+// Flip on once Stripe boost pricing/webhook is fully wired up and tested.
+export const BOOST_ENABLED = false
+
 export const CATEGORIES = [
   'Analytics',
   'Artificial Intelligence',

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import Nav from '@/components/Nav'
 import { computeVoteSummary } from '@/lib/votes'
-import { Verdict } from '@/lib/types'
+import { Verdict, BOOST_ENABLED } from '@/lib/types'
 import { BoostBadge } from '@/app/p/[slug]/BoostPanel'
 
 export const revalidate = 10
@@ -21,9 +21,9 @@ export default async function ExplorePage() {
     if (!active) return 2
     return p.boost_type === 'paid' ? 0 : p.boost_type === 'trial' ? 1 : 2
   }
-  const projects = [...(rawProjects ?? [])].sort(
-    (a, b) => boostRank(a) - boostRank(b)
-  )
+  const projects = BOOST_ENABLED
+    ? [...(rawProjects ?? [])].sort((a, b) => boostRank(a) - boostRank(b))
+    : rawProjects ?? []
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -94,7 +94,7 @@ export default async function ExplorePage() {
                       </h2>
                     </div>
                   </div>
-                  <BoostBadge until={project.boosted_until} />
+                  {BOOST_ENABLED && <BoostBadge until={project.boosted_until} />}
                   <p className="text-zinc-500 text-sm line-clamp-2">
                     {project.description}
                   </p>
