@@ -28,7 +28,7 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-[#0a0a0a]">
       <Nav />
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-semibold text-zinc-100">Your Projects</h1>
             <p className="text-zinc-600 text-sm mt-1">{user.email}</p>
@@ -41,14 +41,14 @@ export default async function DashboardPage() {
             ) : (
               <a
                 href="/api/stripe/checkout"
-                className="text-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-200 font-medium px-4 py-2 rounded-full transition-colors"
+                className="text-sm bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-200 font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap"
               >
                 Upgrade to Pro →
               </a>
             )}
             <Link
               href="/new"
-              className="text-sm bg-yellow-400 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-300 transition-colors"
+              className="text-sm bg-yellow-400 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-300 transition-colors whitespace-nowrap"
             >
               + New Project
             </Link>
@@ -56,14 +56,14 @@ export default async function DashboardPage() {
         </div>
 
         {!isPaid && (
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-4 mb-6 flex items-center justify-between">
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <p className="text-sm text-zinc-500">
               <span className="text-zinc-200 font-medium">Free tier:</span> 1 active
               project at a time.
             </p>
             <a
               href="/api/stripe/checkout"
-              className="text-sm text-yellow-400 font-medium hover:text-yellow-300"
+              className="text-sm text-yellow-400 font-medium hover:text-yellow-300 whitespace-nowrap"
             >
               Upgrade for $8/mo →
             </a>
