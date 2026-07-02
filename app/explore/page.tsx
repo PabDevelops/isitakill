@@ -13,6 +13,7 @@ export default async function ExplorePage() {
   const { data: rawProjects } = await supabase
     .from('projects')
     .select('*, votes(*)')
+    .or(`voting_ends_at.is.null,voting_ends_at.gt.${new Date().toISOString()}`)
     .order('created_at', { ascending: false })
 
   const boostRank = (p: { boost_type: string | null; boosted_until: string | null }) => {
@@ -62,9 +63,6 @@ export default async function ExplorePage() {
                 (project.votes ?? []) as { vote: Verdict }[],
                 project.builder_verdict as Verdict
               )
-              const votingClosed = project.voting_ends_at
-                ? new Date(project.voting_ends_at) < new Date()
-                : false
 
               return (
                 <Link
@@ -95,11 +93,6 @@ export default async function ExplorePage() {
                         {project.name}
                       </h2>
                     </div>
-                    {summary.isFlipped && votingClosed && (
-                      <span className="text-xs bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-medium px-2 py-0.5 rounded-full shrink-0 ml-2">
-                        🔄 Flipped
-                      </span>
-                    )}
                   </div>
                   <BoostBadge until={project.boosted_until} />
                   <p className="text-zinc-500 text-sm line-clamp-2">
@@ -135,14 +128,8 @@ export default async function ExplorePage() {
                         {project.builder_verdict.toUpperCase()}
                       </span>
                     </span>
-                    <span
-                      className={`font-medium px-2 py-0.5 rounded-full ${
-                        votingClosed
-                          ? 'bg-white/[0.04] text-zinc-500'
-                          : 'bg-green-500/10 text-green-400'
-                      }`}
-                    >
-                      {votingClosed ? 'Closed' : 'Voting open'}
+                    <span className="font-medium px-2 py-0.5 rounded-full bg-green-500/10 text-green-400">
+                      Voting open
                     </span>
                   </div>
                   <div className="flex rounded-full overflow-hidden h-1.5 bg-white/[0.05]">

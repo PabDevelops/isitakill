@@ -24,12 +24,20 @@ export async function GET(req: Request) {
 
   const { data: project } = await supabase
     .from('projects')
-    .select('id, slug, user_id')
+    .select('id, slug, user_id, voting_ends_at')
     .eq('id', projectId)
     .single()
 
   if (!project || project.user_id !== user.id) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+
+  const stillLive =
+    project.voting_ends_at && new Date(project.voting_ends_at) > new Date()
+  if (!stillLive) {
+    return NextResponse.redirect(
+      new URL(`/p/${project.slug}`, process.env.NEXT_PUBLIC_APP_URL!)
+    )
   }
 
   const session = await getStripe().checkout.sessions.create({

@@ -10,14 +10,6 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login?next=/dashboard')
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('subscription_status')
-    .eq('id', user.id)
-    .single()
-
-  const isPaid = profile?.subscription_status === 'active'
-
   const { data: projects } = await supabase
     .from('projects')
     .select('*, votes(*)')
@@ -33,35 +25,13 @@ export default async function DashboardPage() {
             <h1 className="text-3xl font-semibold text-zinc-100">Your Projects</h1>
             <p className="text-zinc-600 text-sm mt-1">{user.email}</p>
           </div>
-          <div className="flex items-center gap-3">
-            {isPaid && (
-              <span className="text-xs bg-yellow-400 text-black font-semibold px-3 py-1 rounded-full">
-                PRO
-              </span>
-            )}
-            <Link
-              href="/new"
-              className="text-sm bg-yellow-400 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-300 transition-colors whitespace-nowrap"
-            >
-              + New Project
-            </Link>
-          </div>
+          <Link
+            href="/new"
+            className="text-sm bg-yellow-400 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-300 transition-colors whitespace-nowrap"
+          >
+            + New Project
+          </Link>
         </div>
-
-        {!isPaid && (
-          <div className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <p className="text-sm text-zinc-500">
-              <span className="text-zinc-200 font-medium">Free tier:</span> 1 active
-              project at a time.
-            </p>
-            <a
-              href="/api/stripe/checkout"
-              className="text-sm text-yellow-400 font-medium hover:text-yellow-300 whitespace-nowrap"
-            >
-              Upgrade for $8/mo →
-            </a>
-          </div>
-        )}
 
         {!projects?.length ? (
           <div className="text-center py-20 text-zinc-600">
@@ -98,18 +68,19 @@ export default async function DashboardPage() {
                     <div>
                       <h2 className="text-lg font-semibold text-zinc-100">{project.name}</h2>
                       <div className="flex items-center gap-2 mt-1.5">
-                        <span
-                          className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                            votingClosed
-                              ? 'bg-white/[0.06] text-zinc-400'
-                              : 'bg-green-500/10 text-green-400'
-                          }`}
-                        >
-                          {votingClosed ? 'Closed' : 'Voting open'}
-                        </span>
-                        {summary.isFlipped && (
-                          <span className="text-xs bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-medium px-2 py-0.5 rounded-full">
-                            🔄 Flipped
+                        {votingClosed ? (
+                          summary.isFlipped ? (
+                            <span className="text-xs bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-medium px-2 py-0.5 rounded-full">
+                              🔄 Flipped
+                            </span>
+                          ) : (
+                            <span className="text-xs bg-white/[0.06] text-zinc-400 font-medium px-2 py-0.5 rounded-full">
+                              ✅ Confirmed
+                            </span>
+                          )
+                        ) : (
+                          <span className="text-xs bg-green-500/10 text-green-400 font-medium px-2 py-0.5 rounded-full">
+                            Voting open
                           </span>
                         )}
                       </div>

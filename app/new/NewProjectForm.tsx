@@ -14,7 +14,6 @@ export default function NewProjectForm() {
     link: '',
     description: '',
     builder_verdict: '' as Verdict | '',
-    voting_days: '7',
     screenshot_urls: '',
     monthly_revenue: '',
     users_count: '',
@@ -301,20 +300,6 @@ export default function NewProjectForm() {
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-zinc-300 mb-2">Voting Window</label>
-        <select
-          value={form.voting_days}
-          onChange={(e) => set('voting_days', e.target.value)}
-          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors"
-        >
-          <option value="3">3 days</option>
-          <option value="7">7 days (recommended)</option>
-          <option value="14">14 days</option>
-          <option value="0">No deadline</option>
-        </select>
-      </div>
-
       {error && (
         <p className="text-red-400 text-sm bg-red-400/10 rounded-lg px-4 py-3">
           {error}
@@ -328,6 +313,9 @@ export default function NewProjectForm() {
       >
         {loading ? 'Submitting...' : 'Submit & Get the Verdict →'}
       </button>
+      <p className="text-zinc-600 text-xs text-center">
+        Your project stays listed for 14 days. Boost it to stay live longer.
+      </p>
     </form>
   )
 }

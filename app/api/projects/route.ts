@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { generateSlug } from '@/lib/votes'
-import { MAX_CATEGORIES, TRIAL_BOOST_HOURS } from '@/lib/types'
+import { MAX_CATEGORIES, TRIAL_BOOST_HOURS, DEFAULT_LISTING_DAYS } from '@/lib/types'
 
 export async function POST(req: Request) {
   const supabase = await createClient()
@@ -16,7 +16,6 @@ export async function POST(req: Request) {
     link,
     description,
     builder_verdict,
-    voting_days,
     screenshot_urls,
     monthly_revenue,
     users_count,
@@ -37,32 +36,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
-  // Check free tier limit
   const { data: profile } = await supabase
     .from('profiles')
-    .select('subscription_status, has_used_free_trial_boost')
+    .select('has_used_free_trial_boost')
     .eq('id', user.id)
     .single()
 
-  const isPaid = profile?.subscription_status === 'active'
-  if (!isPaid) {
-    const { count } = await supabase
-      .from('projects')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-    if ((count ?? 0) >= 1) {
-      return NextResponse.json(
-        { error: 'Free tier limit: upgrade to add more projects' },
-        { status: 403 }
-      )
-    }
-  }
-
   const slug = generateSlug(name)
-  const voting_ends_at =
-    voting_days && parseInt(voting_days) > 0
-      ? new Date(Date.now() + parseInt(voting_days) * 86400000).toISOString()
-      : null
+  const voting_ends_at = new Date(
+    Date.now() + DEFAULT_LISTING_DAYS * 86400000
+  ).toISOString()
 
   const grantTrialBoost = !profile?.has_used_free_trial_boost
   const boosted_until = grantTrialBoost

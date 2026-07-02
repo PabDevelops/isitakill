@@ -6,38 +6,11 @@ import Nav from '@/components/Nav'
 export default async function NewPage() {
   const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL?.startsWith('https')
 
-  if (!isConfigured) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a]">
-        <Nav />
-        <div className="max-w-2xl mx-auto px-4 py-16">
-          <h1 className="text-3xl font-semibold mb-2 text-zinc-100">Submit Your Project</h1>
-          <p className="text-zinc-500 mb-10">
-            Be brutally honest. The internet can handle it.
-          </p>
-          <NewProjectForm />
-        </div>
-      </div>
-    )
+  if (isConfigured) {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) redirect('/login?next=/new')
   }
-
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login?next=/new')
-
-  const { count } = await supabase
-    .from('projects')
-    .select('id', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('subscription_status')
-    .eq('id', user.id)
-    .single()
-
-  const isPaid = profile?.subscription_status === 'active'
-  const canCreate = isPaid || (count ?? 0) < 1
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -47,24 +20,7 @@ export default async function NewPage() {
         <p className="text-zinc-500 mb-10">
           Be brutally honest. The internet can handle it.
         </p>
-        {!canCreate ? (
-          <div className="bg-white/[0.02] border border-yellow-400/20 rounded-2xl p-8 text-center space-y-4">
-            <div className="text-3xl">🔒</div>
-            <h2 className="text-lg font-semibold text-zinc-100">Free tier limit reached</h2>
-            <p className="text-zinc-500">
-              You already have an active project. Upgrade to submit unlimited
-              projects at the same time.
-            </p>
-            <a
-              href="/api/stripe/checkout"
-              className="inline-block bg-yellow-400 text-black font-semibold px-8 py-3 rounded-full hover:bg-yellow-300 transition-colors"
-            >
-              Upgrade for $8/month →
-            </a>
-          </div>
-        ) : (
-          <NewProjectForm />
-        )}
+        <NewProjectForm />
       </div>
     </div>
   )

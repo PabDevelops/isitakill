@@ -290,7 +290,7 @@ export default async function ProjectPage({
               />
             )}
 
-            {isOwner && (
+            {isOwner && !votingClosed && (
               <BoostPanel
                 projectId={project.id}
                 boostedUntil={project.boosted_until}

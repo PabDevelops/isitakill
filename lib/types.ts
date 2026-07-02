@@ -16,6 +16,7 @@ export const BOOST_OPTIONS: BoostOption[] = [
 ]
 
 export const TRIAL_BOOST_HOURS = 24
+export const DEFAULT_LISTING_DAYS = 14
 
 export const CATEGORIES = [
   'Analytics',
