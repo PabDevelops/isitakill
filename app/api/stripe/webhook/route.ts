@@ -1,12 +1,14 @@
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import type Stripe from 'stripe'
 
 export async function POST(req: Request) {
+  const stripe = getStripe()
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')!
 
-  let event: ReturnType<typeof stripe.webhooks.constructEvent> extends Promise<infer T> ? T : ReturnType<typeof stripe.webhooks.constructEvent>
+  let event: Stripe.Event
   try {
     event = stripe.webhooks.constructEvent(
       body,
