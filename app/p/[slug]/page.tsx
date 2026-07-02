@@ -4,7 +4,9 @@ import { computeVoteSummary } from '@/lib/votes'
 import { Verdict } from '@/lib/types'
 import VotePanel from './VotePanel'
 import ResultPanel from './ResultPanel'
+import BoostPanel, { BoostBadge } from './BoostPanel'
 import Nav from '@/components/Nav'
+import ViewTracker from '@/components/ViewTracker'
 import type { Metadata } from 'next'
 
 export const revalidate = 10
@@ -70,6 +72,11 @@ export default async function ProjectPage({
 
   if (!project) notFound()
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  const isOwner = user?.id === project.user_id
+
   const { data: votes } = await supabase
     .from('votes')
     .select('vote')
@@ -85,16 +92,24 @@ export default async function ProjectPage({
     : false
 
   const verdictColor = project.builder_verdict === 'build' ? 'green' : 'red'
+  const isBoosted =
+    project.boosted_until && new Date(project.boosted_until) > new Date()
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       <Nav />
+      <ViewTracker projectId={project.id} />
       <div className="max-w-6xl mx-auto px-4 py-10">
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           {/* Main column */}
           <div className="lg:col-span-2 space-y-8">
             {/* Hero: thumbnail + overlapping logo */}
             <div>
+              {isBoosted && (
+                <div className="mb-3">
+                  <BoostBadge until={project.boosted_until} />
+                </div>
+              )}
               {project.thumbnail_url ? (
                 <div className="relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -272,6 +287,16 @@ export default async function ProjectPage({
                 slug={project.slug}
                 projectName={project.name}
                 builderVerdict={project.builder_verdict as Verdict}
+              />
+            )}
+
+            {isOwner && (
+              <BoostPanel
+                projectId={project.id}
+                boostedUntil={project.boosted_until}
+                boostType={project.boost_type}
+                trialViews={project.trial_boost_views ?? 0}
+                trialVotes={project.trial_boost_votes ?? 0}
               />
             )}
           </div>

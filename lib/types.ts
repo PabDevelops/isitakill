@@ -1,5 +1,21 @@
 export type Verdict = 'build' | 'kill'
 export type PricingTier = 'free' | 'freemium' | 'paid'
+export type BoostType = 'paid' | 'trial'
+
+export interface BoostOption {
+  days: number
+  price: number
+  label: string
+}
+
+export const BOOST_OPTIONS: BoostOption[] = [
+  { days: 1, price: 3, label: 'Boost 1 day' },
+  { days: 3, price: 7, label: 'Boost 3 days' },
+  { days: 7, price: 12, label: 'Boost 7 days' },
+  { days: 14, price: 20, label: 'Boost 14 days' },
+]
+
+export const TRIAL_BOOST_HOURS = 24
 
 export const CATEGORIES = [
   'Analytics',
@@ -50,6 +66,10 @@ export interface Project {
   pricing_tier: PricingTier | null
   creator_name: string | null
   creator_twitter: string | null
+  boosted_until: string | null
+  boost_type: BoostType | null
+  trial_boost_views: number | null
+  trial_boost_votes: number | null
 }
 
 export interface Vote {

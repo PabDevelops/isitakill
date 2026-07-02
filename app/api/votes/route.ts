@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
@@ -16,7 +17,7 @@ export async function POST(req: Request) {
   // Check project exists and voting is open
   const { data: project } = await supabase
     .from('projects')
-    .select('id, voting_ends_at')
+    .select('id, voting_ends_at, boost_type, boosted_until, trial_boost_votes')
     .eq('id', project_id)
     .single()
 
@@ -45,5 +46,17 @@ export async function POST(req: Request) {
   })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  const trialActive =
+    project.boost_type === 'trial' &&
+    project.boosted_until &&
+    new Date(project.boosted_until) > new Date()
+  if (trialActive) {
+    await createAdminClient()
+      .from('projects')
+      .update({ trial_boost_votes: (project.trial_boost_votes ?? 0) + 1 })
+      .eq('id', project_id)
+  }
+
   return NextResponse.json({ success: true })
 }

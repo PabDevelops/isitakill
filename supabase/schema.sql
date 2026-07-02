@@ -4,6 +4,7 @@ create table if not exists profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   subscription_status text default 'free',
   stripe_customer_id text,
+  has_used_free_trial_boost boolean default false,
   updated_at timestamptz default now()
 );
 
@@ -27,7 +28,11 @@ create table if not exists projects (
   categories text[],
   pricing_tier text check (pricing_tier in ('free', 'freemium', 'paid')),
   creator_name text,
-  creator_twitter text
+  creator_twitter text,
+  boosted_until timestamptz,
+  boost_type text check (boost_type in ('paid', 'trial')),
+  trial_boost_views integer default 0,
+  trial_boost_votes integer default 0
 );
 
 create table if not exists votes (
@@ -106,3 +111,10 @@ create policy "Users can update their own project-images"
 create policy "Users can delete their own project-images"
   on storage.objects for delete
   using (bucket_id = 'project-images' and auth.uid() = owner);
+
+-- Migration: boost system
+alter table profiles add column if not exists has_used_free_trial_boost boolean default false;
+alter table projects add column if not exists boosted_until timestamptz;
+alter table projects add column if not exists boost_type text check (boost_type in ('paid', 'trial'));
+alter table projects add column if not exists trial_boost_views integer default 0;
+alter table projects add column if not exists trial_boost_votes integer default 0;

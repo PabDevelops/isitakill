@@ -45,20 +45,18 @@ export default async function Home() {
             Brutal honesty required
           </div>
           <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05] mb-6 text-zinc-100">
-            Is it a <span className="text-yellow-400">Kill</span>?
+            Is it a <span className="text-yellow-400">kill</span>?
           </h1>
           <p className="text-lg text-zinc-500 max-w-xl mx-auto mb-10 leading-relaxed">
-            Submit your side project with your honest verdict. The internet
-            votes <span className="text-green-400 font-medium">BUILD</span> or{' '}
-            <span className="text-red-400 font-medium">KILL</span>. Strangers
-            might believe in it more than you do — or confirm your worst fears.
+            You built it. You&apos;re not sure if it&apos;s worth saving. Let
+            strangers decide — and find out if you were wrong.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/new"
               className="px-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold rounded-full transition-all hover:scale-[1.03] active:scale-95"
             >
-              Submit Your Project →
+              Submit your project →
             </Link>
             <Link
               href="#how"
@@ -73,7 +71,7 @@ export default async function Home() {
       {/* Example flip cards */}
       <section className="max-w-5xl mx-auto px-4 pb-24">
         <h2 className="text-zinc-600 uppercase tracking-widest text-xs font-medium mb-6 text-center">
-          Recent flips — when the community disagrees with the builder
+          Builders who got flipped
         </h2>
         <div className="grid sm:grid-cols-3 gap-4">
           {EXAMPLE_CARDS.map((card) => (
@@ -95,17 +93,17 @@ export default async function Home() {
             {
               step: '01',
               title: 'You submit',
-              body: "Describe your project, its traction, and give your own honest verdict — build or kill. Don't sugarcoat it.",
+              body: 'Submit your project — and your own honest verdict: BUILD or KILL.',
             },
             {
               step: '02',
               title: 'Strangers vote',
-              body: 'Anyone with the link votes BUILD or KILL — no login required. 7-day voting window.',
+              body: 'The community votes, blind to what you think.',
             },
             {
               step: '03',
               title: 'The flip',
-              body: "If the community disagrees with you, you get the FLIP badge — the most shareable outcome. Sometimes you need an outsider's perspective.",
+              body: "Sometimes they flip it. That's the whole point.",
             },
           ].map(({ step, title, body }) => (
             <div key={step} className="space-y-3">
@@ -133,14 +131,15 @@ export default async function Home() {
             href="/new"
             className="inline-block px-8 py-3 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 transition-colors"
           >
-            Submit Your Project →
+            Submit your project →
           </Link>
         </div>
       </section>
 
       <div className="wave-line" />
       <footer className="text-center py-8 text-zinc-600 text-sm">
-        IsitAKill? — because you need honest feedback, not validation
+        Built for indie hackers who build too much and kill too late — or too
+        early.
       </footer>
     </div>
   )

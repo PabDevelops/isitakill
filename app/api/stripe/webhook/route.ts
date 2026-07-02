@@ -23,11 +23,37 @@ export async function POST(req: Request) {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
-    const userId = session.metadata?.user_id
-    if (userId) {
-      await supabase
-        .from('profiles')
-        .upsert({ id: userId, subscription_status: 'active' })
+
+    if (session.metadata?.type === 'boost') {
+      const projectId = session.metadata.project_id
+      const days = parseInt(session.metadata.days ?? '0', 10)
+      if (projectId && days > 0) {
+        const { data: project } = await supabase
+          .from('projects')
+          .select('boosted_until')
+          .eq('id', projectId)
+          .single()
+
+        const base =
+          project?.boosted_until && new Date(project.boosted_until) > new Date()
+            ? new Date(project.boosted_until)
+            : new Date()
+        const boosted_until = new Date(
+          base.getTime() + days * 86400000
+        ).toISOString()
+
+        await supabase
+          .from('projects')
+          .update({ boosted_until, boost_type: 'paid' })
+          .eq('id', projectId)
+      }
+    } else {
+      const userId = session.metadata?.user_id
+      if (userId) {
+        await supabase
+          .from('profiles')
+          .upsert({ id: userId, subscription_status: 'active' })
+      }
     }
   }
 

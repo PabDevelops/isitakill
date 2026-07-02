@@ -3,16 +3,26 @@ import { createClient } from '@/lib/supabase/server'
 import Nav from '@/components/Nav'
 import { computeVoteSummary } from '@/lib/votes'
 import { Verdict } from '@/lib/types'
+import { BoostBadge } from '@/app/p/[slug]/BoostPanel'
 
 export const revalidate = 10
 
 export default async function ExplorePage() {
   const supabase = await createClient()
 
-  const { data: projects } = await supabase
+  const { data: rawProjects } = await supabase
     .from('projects')
     .select('*, votes(*)')
     .order('created_at', { ascending: false })
+
+  const boostRank = (p: { boost_type: string | null; boosted_until: string | null }) => {
+    const active = p.boosted_until && new Date(p.boosted_until) > new Date()
+    if (!active) return 2
+    return p.boost_type === 'paid' ? 0 : p.boost_type === 'trial' ? 1 : 2
+  }
+  const projects = [...(rawProjects ?? [])].sort(
+    (a, b) => boostRank(a) - boostRank(b)
+  )
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -91,6 +101,7 @@ export default async function ExplorePage() {
                       </span>
                     )}
                   </div>
+                  <BoostBadge until={project.boosted_until} />
                   <p className="text-zinc-500 text-sm line-clamp-2">
                     {project.description}
                   </p>

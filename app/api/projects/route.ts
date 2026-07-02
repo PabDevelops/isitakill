@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { generateSlug } from '@/lib/votes'
-import { MAX_CATEGORIES } from '@/lib/types'
+import { MAX_CATEGORIES, TRIAL_BOOST_HOURS } from '@/lib/types'
 
 export async function POST(req: Request) {
   const supabase = await createClient()
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
   // Check free tier limit
   const { data: profile } = await supabase
     .from('profiles')
-    .select('subscription_status')
+    .select('subscription_status, has_used_free_trial_boost')
     .eq('id', user.id)
     .single()
 
@@ -64,6 +64,12 @@ export async function POST(req: Request) {
       ? new Date(Date.now() + parseInt(voting_days) * 86400000).toISOString()
       : null
 
+  const grantTrialBoost = !profile?.has_used_free_trial_boost
+  const boosted_until = grantTrialBoost
+    ? new Date(Date.now() + TRIAL_BOOST_HOURS * 3600000).toISOString()
+    : null
+  const boost_type = grantTrialBoost ? 'trial' : null
+
   const { data, error } = await supabase
     .from('projects')
     .insert({
@@ -85,10 +91,20 @@ export async function POST(req: Request) {
       pricing_tier: pricing_tier || null,
       creator_name: creator_name?.trim() || null,
       creator_twitter: creator_twitter?.trim().replace(/^@/, '') || null,
+      boosted_until,
+      boost_type,
     })
     .select()
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  if (grantTrialBoost) {
+    await supabase
+      .from('profiles')
+      .update({ has_used_free_trial_boost: true })
+      .eq('id', user.id)
+  }
+
   return NextResponse.json(data)
 }
