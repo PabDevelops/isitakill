@@ -87,7 +87,7 @@ export default function ExploreFilters({
       {/* Category Horizontal Scrolling Pills */}
       <div className="space-y-2">
         <div className="text-xs text-zinc-500 font-semibold uppercase tracking-wider">Categories</div>
-        <div className="flex flex-wrap gap-2 max-h-36 overflow-y-auto pr-2 py-1 select-none">
+        <div className="flex flex-wrap gap-2 py-1 select-none">
           <button
             onClick={() => updateFilters('category', null)}
             className={`text-xs font-semibold px-4 py-2 rounded-full border transition-all ${

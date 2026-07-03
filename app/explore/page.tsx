@@ -79,7 +79,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
     <div className="relative min-h-screen bg-[#060608]">
       <DotGrid variant="page" />
       <Nav />
-      <div className="relative max-w-5xl mx-auto px-4 py-12 z-10 space-y-8">
+      <div className="relative max-w-7xl mx-auto px-4 py-12 z-10 space-y-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-8">
@@ -223,17 +223,17 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
                       </span>
                       {votingClosed ? (
                         summary.isFlipped ? (
-                          <span className="font-bold px-2.5 py-0.5 rounded-full bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 text-[10px]">
-                            🔄 Flipped
+                          <span className="font-bold px-2.5 py-0.5 rounded-full bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 text-[10px] whitespace-nowrap">
+                            🔄 Flipped • {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
                           </span>
                         ) : (
-                          <span className="font-bold px-2.5 py-0.5 rounded-full bg-zinc-500/10 text-zinc-400 border border-white/[0.06] text-[10px]">
-                            ✓ Decided
+                          <span className="font-bold px-2.5 py-0.5 rounded-full bg-zinc-500/10 text-zinc-400 border border-white/[0.06] text-[10px] whitespace-nowrap">
+                            ✓ Decided • {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
                           </span>
                         )
                       ) : (
-                        <span className="font-bold px-2.5 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] animate-pulse">
-                          Voting open
+                        <span className="font-bold px-2.5 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] animate-pulse whitespace-nowrap">
+                          Voting open • {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
                         </span>
                       )}
                     </div>
@@ -250,7 +250,6 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
                     </div>
                     <div className="flex justify-between text-[10px] text-zinc-500 font-semibold uppercase tracking-wider">
                       <span className="text-green-400">{summary.buildPct}% BUILD</span>
-                      <span>{summary.total} votes</span>
                       <span className="text-red-400">{summary.killPct}% KILL</span>
                     </div>
                   </div>

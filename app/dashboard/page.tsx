@@ -82,17 +82,17 @@ export default async function DashboardPage() {
                         <div className="flex flex-wrap gap-2 mt-2">
                           {votingClosed ? (
                             summary.isFlipped ? (
-                              <span className="text-[10px] bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
-                                🔄 Flipped
+                              <span className="text-[10px] bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full whitespace-nowrap">
+                                🔄 Flipped • {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
                               </span>
                             ) : (
-                              <span className="text-[10px] bg-white/[0.03] text-zinc-400 border border-white/[0.08] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
-                                ✓ Confirmed
+                              <span className="text-[10px] bg-white/[0.03] text-zinc-400 border border-white/[0.08] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full whitespace-nowrap">
+                                ✓ Confirmed • {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
                               </span>
                             )
                           ) : (
-                            <span className="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full animate-pulse">
-                              Voting open
+                            <span className="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full animate-pulse whitespace-nowrap">
+                              Voting open • {summary.total} {summary.total === 1 ? 'vote' : 'votes'}
                             </span>
                           )}
                           {isBoosted && (
@@ -128,7 +128,6 @@ export default async function DashboardPage() {
                     </div>
                     <div className="flex justify-between text-[10px] text-zinc-500 font-semibold uppercase tracking-wider">
                       <span className="text-green-400">{summary.buildPct}% BUILD</span>
-                      <span>{summary.total} votes</span>
                       <span className="text-red-400">{summary.killPct}% KILL</span>
                     </div>
                   </div>

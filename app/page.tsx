@@ -126,7 +126,7 @@ export default async function Home() {
                 (project.votes ?? []) as { vote: Verdict }[],
                 project.builder_verdict as Verdict
               )
-              const killPct = 100 - summary.buildPct
+              const killPct = summary.killPct
               const isBoosted = project.boosted_until && new Date(project.boosted_until) > new Date()
               const votingClosed = project.voting_ends_at
                 ? new Date(project.voting_ends_at) < new Date()

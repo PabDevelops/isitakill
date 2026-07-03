@@ -28,7 +28,7 @@ export function BoostBadge({ until }: { until: string | null }) {
   const label = useCountdown(until)
   if (!until || !label) return null
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-orange-400/10 text-orange-400 border border-orange-400/30">
+    <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-orange-400/10 text-orange-400 border border-orange-400/30 whitespace-nowrap">
       🔥 Boosted <span className="text-orange-400/70">· {label}</span>
     </span>
   )
@@ -69,11 +69,11 @@ export default function BoostPanel({
       )}
 
       {isActive ? (
-        <div className="flex items-center justify-between bg-white/[0.02] border border-white/[0.08] rounded-2xl p-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 bg-white/[0.02] border border-white/[0.08] rounded-2xl p-4">
           <BoostBadge until={boostedUntil} />
           <button
             onClick={() => setOpen((v) => !v)}
-            className="text-xs text-zinc-500 hover:text-zinc-200 transition-colors"
+            className="text-xs text-zinc-500 hover:text-zinc-200 transition-colors shrink-0"
           >
             Extend boost
           </button>

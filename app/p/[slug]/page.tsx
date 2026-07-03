@@ -5,6 +5,7 @@ import { Verdict, BOOST_ENABLED } from '@/lib/types'
 import VotePanel from './VotePanel'
 import ResultPanel from './ResultPanel'
 import BoostPanel, { BoostBadge } from './BoostPanel'
+import ScreenshotGallery from './ScreenshotGallery'
 import Nav from '@/components/Nav'
 import DotGrid from '@/components/DotGrid'
 import ViewTracker from '@/components/ViewTracker'
@@ -272,25 +273,10 @@ export default async function ProjectPage({
 
             {/* Screenshots Gallery */}
             {project.screenshot_urls && (
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 pl-1">Project Screenshots</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {project.screenshot_urls
-                    .split('\n')
-                    .map((url: string) => url.trim())
-                    .filter(Boolean)
-                    .map((url: string, i: number) => (
-                      <div key={i} className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.01]">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={url}
-                          alt={`${project.name} screenshot ${i + 1}`}
-                          className="w-full object-cover aspect-[4/3] hover:scale-[1.02] transition-transform duration-300"
-                        />
-                      </div>
-                    ))}
-                </div>
-              </div>
+              <ScreenshotGallery
+                screenshotUrls={project.screenshot_urls}
+                projectName={project.name}
+              />
             )}
           </div>
 
