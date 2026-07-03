@@ -137,9 +137,22 @@ export default async function Home() {
       </section>
 
       <div className="wave-line" />
-      <footer className="text-center py-8 text-zinc-600 text-sm">
-        Built for indie hackers who build too much and kill too late — or too
-        early.
+      <footer className="text-center py-8 text-zinc-600 text-sm space-y-3">
+        <p>
+          Built for indie hackers who build too much and kill too late — or
+          too early.
+        </p>
+        <div className="flex items-center justify-center gap-4 text-xs">
+          <Link href="/privacy" className="hover:text-zinc-400 transition-colors">
+            Privacy
+          </Link>
+          <Link href="/terms" className="hover:text-zinc-400 transition-colors">
+            Terms
+          </Link>
+          <Link href="/refunds" className="hover:text-zinc-400 transition-colors">
+            Refunds
+          </Link>
+        </div>
       </footer>
     </div>
   )
