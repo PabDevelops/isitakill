@@ -13,9 +13,23 @@ export const metadata: Metadata = {
   description:
     'Submit your side project. The community votes BUILD or KILL. Find out if strangers believe in it more than you do.',
   openGraph: {
-    title: 'IsitAKill?',
+    title: 'IsitAKill? — Community Verdict for Your Side Project',
     description: 'Will strangers save your side project?',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'IsitAKill? — Will strangers save your side project?',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'IsitAKill? — Community Verdict for Your Side Project',
+    description: 'Will strangers save your side project?',
+    images: ['/og-image.png'],
   },
 }
 
