@@ -1,6 +1,12 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'IsitAKill? — Community Verdict for Your Side Project',
@@ -19,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-[#0a0a0a] text-white antialiased">
+    <html lang="en" className="scroll-smooth">
+      <body className={`${jakarta.className} min-h-screen bg-[#0a0a0a] text-white antialiased selection:bg-yellow-400 selection:text-black`}>
         {children}
         <Analytics />
       </body>
