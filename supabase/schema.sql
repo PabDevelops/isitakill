@@ -35,6 +35,14 @@ create table if not exists projects (
   trial_boost_votes integer default 0
 );
 
+create table if not exists boost_purchases (
+  id uuid primary key default gen_random_uuid(),
+  project_id uuid references projects(id) on delete cascade not null,
+  days integer not null,
+  amount_cents integer not null,
+  created_at timestamptz default now()
+);
+
 create table if not exists votes (
   id uuid primary key default gen_random_uuid(),
   project_id uuid references projects(id) on delete cascade not null,
@@ -48,6 +56,8 @@ create table if not exists votes (
 alter table profiles enable row level security;
 alter table projects enable row level security;
 alter table votes enable row level security;
+alter table boost_purchases enable row level security;
+-- No public policies: only the service-role admin client can read/write this table.
 
 -- Profiles: user can read/update own profile
 create policy "Users can view own profile" on profiles for select using (auth.uid() = id);
@@ -118,3 +128,13 @@ alter table projects add column if not exists boosted_until timestamptz;
 alter table projects add column if not exists boost_type text check (boost_type in ('paid', 'trial'));
 alter table projects add column if not exists trial_boost_views integer default 0;
 alter table projects add column if not exists trial_boost_votes integer default 0;
+
+-- Migration: boost purchase ledger for admin analytics
+create table if not exists boost_purchases (
+  id uuid primary key default gen_random_uuid(),
+  project_id uuid references projects(id) on delete cascade not null,
+  days integer not null,
+  amount_cents integer not null,
+  created_at timestamptz default now()
+);
+alter table boost_purchases enable row level security;

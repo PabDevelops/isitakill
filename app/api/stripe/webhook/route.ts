@@ -47,6 +47,12 @@ export async function POST(req: Request) {
           .from('projects')
           .update({ voting_ends_at: newEnd, boosted_until: newEnd, boost_type: 'paid' })
           .eq('id', projectId)
+
+        await supabase.from('boost_purchases').insert({
+          project_id: projectId,
+          days,
+          amount_cents: session.amount_total ?? 0,
+        })
       }
     }
   }
