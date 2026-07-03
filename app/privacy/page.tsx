@@ -81,8 +81,8 @@ export default function PrivacyPage() {
           <p>
             Wherever you&apos;re located, you can ask us to access, correct,
             export, or delete your personal data at any time by emailing{' '}
-            <a href="mailto:privacy@isitakill.com" className="text-yellow-400 hover:text-yellow-300">
-              privacy@isitakill.com
+            <a href="mailto:hi@pablodevelops.com" className="text-yellow-400 hover:text-yellow-300">
+              hi@pablodevelops.com
             </a>
             . If you&apos;re in the EU/EEA or UK, this is your right under
             GDPR; if you&apos;re a California resident, this is your right
@@ -105,8 +105,8 @@ export default function PrivacyPage() {
 
         <p>
           Questions? Email{' '}
-          <a href="mailto:privacy@isitakill.com" className="text-yellow-400 hover:text-yellow-300">
-            privacy@isitakill.com
+          <a href="mailto:hi@pablodevelops.com" className="text-yellow-400 hover:text-yellow-300">
+            hi@pablodevelops.com
           </a>
           .
         </p>

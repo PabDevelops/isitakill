@@ -44,8 +44,8 @@ export default function RefundsPage() {
           <h2 className="text-lg font-semibold text-zinc-100">How to request one</h2>
           <p>
             Email{' '}
-            <a href="mailto:billing@isitakill.com" className="text-yellow-400 hover:text-yellow-300">
-              billing@isitakill.com
+            <a href="mailto:hi@pablodevelops.com" className="text-yellow-400 hover:text-yellow-300">
+              hi@pablodevelops.com
             </a>{' '}
             with your account email and the approximate date of the charge.
             We aim to respond within 3 business days, and approved refunds

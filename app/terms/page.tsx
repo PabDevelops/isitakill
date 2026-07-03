@@ -113,8 +113,8 @@ export default function TermsPage() {
 
         <p>
           Questions? Email{' '}
-          <a href="mailto:hello@isitakill.com" className="text-yellow-400 hover:text-yellow-300">
-            hello@isitakill.com
+          <a href="mailto:hi@pablodevelops.com" className="text-yellow-400 hover:text-yellow-300">
+            hi@pablodevelops.com
           </a>
           .
         </p>
