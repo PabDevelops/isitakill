@@ -11,24 +11,27 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: 'IsitAKill? — Community Verdict for Your Side Project',
   description:
-    'Submit your side project. The community votes BUILD or KILL. Find out if strangers believe in it more than you do.',
+    'Submit your side project and let a jury of fellow builders vote BUILD or KILL. Get honest feedback and find out if strangers believe in your product.',
   openGraph: {
     title: 'IsitAKill? — Community Verdict for Your Side Project',
-    description: 'Will strangers save your side project?',
+    description:
+      'Submit your side project and let a jury of fellow builders vote BUILD or KILL. Get honest feedback and find out if strangers believe in your product.',
     type: 'website',
+    siteName: 'IsitAKill?',
     images: [
       {
         url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'IsitAKill? — Will strangers save your side project?',
+        width: 1222,
+        height: 526,
+        alt: 'IsitAKill? — Community Verdict for Your Side Project',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'IsitAKill? — Community Verdict for Your Side Project',
-    description: 'Will strangers save your side project?',
+    description:
+      'Submit your side project and let a jury of fellow builders vote BUILD or KILL. Get honest feedback and find out if strangers believe in your product.',
     images: ['/og-image.png'],
   },
 }
