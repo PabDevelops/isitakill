@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import GlowOrb from '@/components/GlowOrb'
+import DotGrid from '@/components/DotGrid'
 
 function LoginForm() {
   const router = useRouter()
@@ -46,6 +47,7 @@ function LoginForm() {
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4 overflow-hidden">
+      <DotGrid variant="page" />
       <div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
         <GlowOrb size={420} />
       </div>

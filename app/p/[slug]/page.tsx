@@ -6,6 +6,7 @@ import VotePanel from './VotePanel'
 import ResultPanel from './ResultPanel'
 import BoostPanel, { BoostBadge } from './BoostPanel'
 import Nav from '@/components/Nav'
+import DotGrid from '@/components/DotGrid'
 import ViewTracker from '@/components/ViewTracker'
 import type { Metadata } from 'next'
 
@@ -98,10 +99,11 @@ export default async function ProjectPage({
     new Date(project.boosted_until) > new Date()
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="relative min-h-screen bg-[#0a0a0a]">
+      <DotGrid variant="page" />
       <Nav />
       <ViewTracker projectId={project.id} />
-      <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="relative max-w-6xl mx-auto px-4 py-10">
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           {/* Main column */}
           <div className="lg:col-span-2 space-y-8">

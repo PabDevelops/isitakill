@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
+import DotGrid from '@/components/DotGrid'
 import { computeVoteSummary } from '@/lib/votes'
 import { Verdict } from '@/lib/types'
 
@@ -17,9 +18,10 @@ export default async function DashboardPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="relative min-h-screen bg-[#0a0a0a]">
+      <DotGrid variant="page" />
       <Nav />
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="relative max-w-3xl mx-auto px-4 py-12">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-semibold text-zinc-100">Your Projects</h1>
