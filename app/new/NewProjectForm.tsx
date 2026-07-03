@@ -9,12 +9,12 @@ export default function NewProjectForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [categories, setCategories] = useState<string[]>([])
+  const [screenshots, setScreenshots] = useState<string[]>(['', '', '', ''])
   const [form, setForm] = useState({
     name: '',
     link: '',
     description: '',
     builder_verdict: '' as Verdict | '',
-    screenshot_urls: '',
     monthly_revenue: '',
     users_count: '',
     monthly_visits: '',
@@ -47,7 +47,11 @@ export default function NewProjectForm() {
     const res = await fetch('/api/projects', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, categories }),
+      body: JSON.stringify({
+        ...form,
+        screenshot_urls: screenshots.filter(Boolean).join('\n'),
+        categories,
+      }),
     })
     const data = await res.json()
     if (!res.ok) {
@@ -187,16 +191,24 @@ export default function NewProjectForm() {
         <label className="block text-sm font-medium text-zinc-300 mb-2">
           Screenshots <span className="text-zinc-500 font-normal">(optional)</span>
         </label>
-        <p className="text-zinc-500 text-xs mb-2">
-          Paste image URLs, one per line (e.g. from Imgur or your own hosting).
+        <p className="text-zinc-500 text-xs mb-4">
+          Upload up to 4 screenshots of your application in action.
         </p>
-        <textarea
-          value={form.screenshot_urls}
-          onChange={(e) => set('screenshot_urls', e.target.value)}
-          rows={3}
-          placeholder={'https://i.imgur.com/abc123.png\nhttps://i.imgur.com/def456.png'}
-          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400/60 transition-colors resize-none"
-        />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[0, 1, 2, 3].map((idx) => (
+            <ImageUpload
+              key={idx}
+              label={`Screenshot ${idx + 1}`}
+              value={screenshots[idx] || ''}
+              onChange={(url) => {
+                const newScreenshots = [...screenshots]
+                newScreenshots[idx] = url
+                setScreenshots(newScreenshots)
+              }}
+              aspect="aspect-[4/3]"
+            />
+          ))}
+        </div>
       </div>
 
       <div>
