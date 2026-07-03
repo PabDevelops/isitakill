@@ -42,6 +42,16 @@ export default async function Home() {
     displayProjects = [...displayProjects, ...closedProjects]
   }
 
+  // Sort display projects: Boosted always first, then by created_at descending
+  displayProjects.sort((a, b) => {
+    const aActiveBoost = a.boosted_until && new Date(a.boosted_until) > new Date() ? 1 : 0
+    const bActiveBoost = b.boosted_until && new Date(b.boosted_until) > new Date() ? 1 : 0
+    if (aActiveBoost !== bActiveBoost) {
+      return bActiveBoost - aActiveBoost // 1 before 0
+    }
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  })
+
   const hasActiveProjects = displayProjects.some(
     (p) => !p.voting_ends_at || new Date(p.voting_ends_at) > new Date()
   )
