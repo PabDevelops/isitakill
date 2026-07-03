@@ -9,6 +9,7 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.isitakill.com'),
   title: 'IsitAKill? — Community Verdict for Your Side Project',
   description:
     'Submit your side project and let a jury of fellow builders vote BUILD or KILL. Get honest feedback and find out if strangers believe in your product.',
