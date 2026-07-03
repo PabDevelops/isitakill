@@ -57,43 +57,86 @@ export default async function AdminPage() {
   const since = new Date(Date.now() - DAYS_BACK * 86400000).toISOString()
   const nowIso = new Date().toISOString()
 
+  // Wrap every query so one failure (e.g. boost_purchases migration not run
+  // yet) can't take down the whole dashboard with a 500.
+  async function safe<T>(label: string, promise: PromiseLike<{ data: T | null; error: unknown }>, fallback: T): Promise<T> {
+    try {
+      const { data, error } = await promise
+      if (error) {
+        console.error(`Admin dashboard: ${label} failed`, error)
+        return fallback
+      }
+      return data ?? fallback
+    } catch (err) {
+      console.error(`Admin dashboard: ${label} threw`, err)
+      return fallback
+    }
+  }
+
   const [
-    { data: usersData },
-    { count: totalProjects },
-    { count: activeProjects },
-    { count: totalVotes },
-    { count: totalBoosts },
-    { data: recentVotes },
-    { data: recentBoosts },
-    { data: allBoostAmounts },
-    { data: projects },
+    users,
+    totalProjects,
+    activeProjects,
+    totalVotes,
+    totalBoosts,
+    recentVotes,
+    recentBoosts,
+    allBoostAmounts,
+    projects,
   ] = await Promise.all([
-    admin.auth.admin.listUsers({ page: 1, perPage: 1000 }),
-    admin.from('projects').select('id', { count: 'exact', head: true }),
-    admin
-      .from('projects')
-      .select('id', { count: 'exact', head: true })
-      .or(`voting_ends_at.is.null,voting_ends_at.gt.${nowIso}`),
-    admin.from('votes').select('id', { count: 'exact', head: true }),
-    admin.from('boost_purchases').select('id', { count: 'exact', head: true }),
-    admin.from('votes').select('created_at').gte('created_at', since),
-    admin.from('boost_purchases').select('created_at, amount_cents').gte('created_at', since),
-    admin.from('boost_purchases').select('amount_cents'),
-    admin
-      .from('projects')
-      .select(
-        'id, name, slug, description, link, logo_url, thumbnail_url, creator_name, creator_twitter, created_at, user_id, boost_type, boosted_until'
-      )
-      .order('created_at', { ascending: false }),
+    safe('list users', admin.auth.admin.listUsers({ page: 1, perPage: 1000 }).then((r) => ({ data: r.data?.users ?? null, error: r.error })), [] as { created_at: string }[]),
+    safe('count projects', admin.from('projects').select('id', { count: 'exact', head: true }).then((r) => ({ data: r.count, error: r.error })), 0),
+    safe(
+      'count active projects',
+      admin
+        .from('projects')
+        .select('id', { count: 'exact', head: true })
+        .or(`voting_ends_at.is.null,voting_ends_at.gt.${nowIso}`)
+        .then((r) => ({ data: r.count, error: r.error })),
+      0
+    ),
+    safe('count votes', admin.from('votes').select('id', { count: 'exact', head: true }).then((r) => ({ data: r.count, error: r.error })), 0),
+    safe('count boosts', admin.from('boost_purchases').select('id', { count: 'exact', head: true }).then((r) => ({ data: r.count, error: r.error })), 0),
+    safe('recent votes', admin.from('votes').select('created_at').gte('created_at', since), [] as { created_at: string }[]),
+    safe(
+      'recent boosts',
+      admin.from('boost_purchases').select('created_at, amount_cents').gte('created_at', since),
+      [] as { created_at: string; amount_cents: number }[]
+    ),
+    safe('all boost amounts', admin.from('boost_purchases').select('amount_cents'), [] as { amount_cents: number }[]),
+    safe(
+      'projects list',
+      admin
+        .from('projects')
+        .select(
+          'id, name, slug, description, link, logo_url, thumbnail_url, creator_name, creator_twitter, created_at, user_id, boost_type, boosted_until'
+        )
+        .order('created_at', { ascending: false }),
+      [] as {
+        id: string
+        name: string
+        slug: string
+        description: string
+        link: string | null
+        logo_url: string | null
+        thumbnail_url: string | null
+        creator_name: string | null
+        creator_twitter: string | null
+        created_at: string
+        user_id: string
+        boost_type: string | null
+        boosted_until: string | null
+      }[]
+    ),
   ])
 
-  const totalUsers = usersData?.users?.length ?? 0
-  const closedProjects = (totalProjects ?? 0) - (activeProjects ?? 0)
-  const totalRevenueCents = (allBoostAmounts ?? []).reduce((s, b) => s + (b.amount_cents ?? 0), 0)
+  const totalUsers = users.length
+  const closedProjects = totalProjects - activeProjects
+  const totalRevenueCents = allBoostAmounts.reduce((s, b) => s + (b.amount_cents ?? 0), 0)
 
-  const signupsSeries = dailySeries((usersData?.users ?? []).map((u) => u.created_at))
-  const votesSeries = dailySeries((recentVotes ?? []).map((v) => v.created_at))
-  const revenueByDay = dailySum(recentBoosts ?? [])
+  const signupsSeries = dailySeries(users.map((u) => u.created_at))
+  const votesSeries = dailySeries(recentVotes.map((v) => v.created_at))
+  const revenueByDay = dailySum(recentBoosts)
 
   const stats = [
     { label: 'Users', value: totalUsers.toLocaleString() },
